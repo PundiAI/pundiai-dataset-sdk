@@ -1,0 +1,364 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "ai dataset server",
+      "version": "v1.0",
+      "title": "ai dataset server"
+    },
+    "basePath": "/ai-dataset-data/",
+    "tags": [
+      {
+        "name": "v1 resource preview",
+        "description": "V 1 View Controller"
+      }
+    ],
+    "paths": {
+      "/v1/view/queryDatasetDetails": {
+        "get": {
+          "tags": [
+            "v1 resource preview"
+          ],
+          "summary": "Dataset details",
+          "operationId": "queryDatasetDetailsUsingGET",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "*/*"
+          ],
+          "parameters": [
+            {
+              "name": "contractAddress",
+              "in": "query",
+              "description": "nft contract",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "tokenId",
+              "in": "query",
+              "description": "nft tokenId",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Resp«QueryDatasetDetailsOutput»"
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      },
+      "/v1/view/queryDatasetPage": {
+        "get": {
+          "tags": [
+            "v1 resource preview"
+          ],
+          "summary": "Pagination query dataset",
+          "operationId": "queryDatasetPageUsingGET",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "*/*"
+          ],
+          "parameters": [
+            {
+              "name": "pageSize",
+              "in": "query",
+              "description": "page size",
+              "required": true,
+              "type": "integer",
+              "format": "int32"
+            },
+            {
+              "name": "pageIndex",
+              "in": "query",
+              "description": "page index starts from 1",
+              "required": true,
+              "type": "integer",
+              "format": "int32"
+            },
+            {
+              "name": "datasetName",
+              "in": "query",
+              "description": "dataset name",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "address",
+              "in": "query",
+              "description": "address",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "addressType",
+              "in": "query",
+              "description": "address type (user address:0, owner address:1, owner or user address:2)",
+              "required": false,
+              "type": "integer",
+              "format": "int32"
+            },
+            {
+              "name": "datasetDataType",
+              "in": "query",
+              "description": "modalities(text, image ...)",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "datasetFormat",
+              "in": "query",
+              "description": "dataset format(.txt, .csv ...)",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "fileSizeStart",
+              "in": "query",
+              "description": "file size from",
+              "required": false,
+              "type": "integer",
+              "format": "int64"
+            },
+            {
+              "name": "fileSizeEnd",
+              "in": "query",
+              "description": "file size to",
+              "required": false,
+              "type": "integer",
+              "format": "int64"
+            },
+            {
+              "name": "permissions",
+              "in": "query",
+              "description": "permissions private or public",
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Resp«Page«QueryDatasetPageOutput»»"
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Forbidden"
+            },
+            "404": {
+              "description": "Not Found"
+            }
+          }
+        }
+      }
+    },
+    "securityDefinitions": {
+      "Access-Token": {
+        "type": "apiKey",
+        "name": "Access-Token",
+        "in": "header"
+      }
+    },
+    "definitions": {
+      "Page«QueryDatasetPageOutput»": {
+        "type": "object",
+        "properties": {
+          "currentPageNo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/QueryDatasetPageOutput"
+            }
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPage": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "QueryDatasetDetailsOutput": {
+        "type": "object",
+        "properties": {
+          "contractAddress": {
+            "type": "string",
+            "description": "nft contract"
+          },
+          "createDt": {
+            "type": "integer",
+            "format": "int64",
+            "description": "create time"
+          },
+          "dataTypeList": {
+            "type": "array",
+            "description": "modalities(text, image ...)",
+            "items": {
+              "type": "string"
+            }
+          },
+          "datasetName": {
+            "type": "string",
+            "description": "dataset name"
+          },
+          "fileFormatList": {
+            "type": "array",
+            "description": "file format",
+            "items": {
+              "type": "string"
+            }
+          },
+          "fileSize": {
+            "type": "integer",
+            "format": "int64",
+            "description": "file size"
+          },
+          "hash": {
+            "type": "string",
+            "description": "hash"
+          },
+          "languageList": {
+            "type": "array",
+            "description": "language",
+            "items": {
+              "type": "string"
+            }
+          },
+          "license": {
+            "type": "string",
+            "description": "license"
+          },
+          "numberOfRows": {
+            "type": "integer",
+            "format": "int64",
+            "description": "number of rows"
+          },
+          "ownerAddress": {
+            "type": "string",
+            "description": "owner address"
+          },
+          "permissions": {
+            "type": "string",
+            "description": "permissions private or public"
+          },
+          "source": {
+            "type": "string",
+            "description": "source"
+          },
+          "taskTypeList": {
+            "type": "array",
+            "description": "task type(single_label, multi_label, entity_name, image_single_label, image_multi_label, image_border, ocr ...)",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tokenId": {
+            "type": "string",
+            "description": "nft tokenId"
+          },
+          "updateDt": {
+            "type": "integer",
+            "format": "int64",
+            "description": "update time"
+          }
+        }
+      },
+      "QueryDatasetPageOutput": {
+        "type": "object",
+        "properties": {
+          "contractAddress": {
+            "type": "string",
+            "description": "nft contract"
+          },
+          "datasetName": {
+            "type": "string",
+            "description": "dataset name"
+          },
+          "fileSize": {
+            "type": "integer",
+            "format": "int64",
+            "description": "file size"
+          },
+          "hash": {
+            "type": "string",
+            "description": "hash"
+          },
+          "ownerAddress": {
+            "type": "string",
+            "description": "owner address"
+          },
+          "permissions": {
+            "type": "string",
+            "description": "permissions private or public"
+          },
+          "tokenId": {
+            "type": "string",
+            "description": "nft tokenId"
+          },
+          "updateDt": {
+            "type": "integer",
+            "format": "int64",
+            "description": "update time"
+          }
+        }
+      },
+      "Resp«Page«QueryDatasetPageOutput»»": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "$ref": "#/definitions/Page«QueryDatasetPageOutput»"
+          },
+          "msg": {
+            "type": "string"
+          }
+        }
+      },
+      "Resp«QueryDatasetDetailsOutput»": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data": {
+            "$ref": "#/definitions/QueryDatasetDetailsOutput"
+          },
+          "msg": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
